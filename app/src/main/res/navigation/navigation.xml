@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/splash_graph"
+    tools:ignore="UnusedNavigation">
+
+    <navigation
+        android:id="@+id/splash_graph"
+        app:startDestination="@id/splash_fragment">
+
+        <action
+            android:id="@+id/splash_to_logged_out"
+            app:destination="@id/logged_out_graph"
+            app:popUpTo="@id/splash_graph"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/splash_to_logged_in"
+            app:destination="@id/logged_in_graph"
+            app:popUpTo="@id/splash_graph"
+            app:popUpToInclusive="true" />
+
+        <fragment
+            android:id="@+id/splash_fragment"
+            android:name="com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.splash.SplashFragment"
+            tools:layout="@layout/splash_fragment" />
+    </navigation>
+
+    <navigation
+        android:id="@+id/logged_in_graph"
+        app:startDestination="@id/profile_fragment">
+
+        <action
+            android:id="@+id/logged_in_to_logged_out"
+            app:destination="@id/logged_out_graph"
+            app:popUpTo="@id/logged_in_graph"
+            app:popUpToInclusive="true" />
+
+        <fragment
+            android:id="@+id/profile_fragment"
+            android:name="com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.profile.ProfileFragment"
+            tools:layout="@layout/profile_fragment" />
+
+    </navigation>
+
+    <navigation
+        android:id="@+id/logged_out_graph"
+        app:startDestination="@id/login_fragment">
+
+        <action
+            android:id="@+id/logged_out_to_registration"
+            app:destination="@id/registration_graph" />
+
+        <action
+            android:id="@+id/logged_out_to_logged_in"
+            app:destination="@id/logged_in_graph"
+            app:popUpTo="@id/logged_out_graph"
+            app:popUpToInclusive="true" />
+
+        <fragment
+            android:id="@+id/login_fragment"
+            android:name="com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.login.LoginFragment"
+            tools:layout="@layout/login_fragment" />
+
+        <navigation
+            android:id="@+id/registration_graph"
+            app:startDestination="@id/enter_profile_data_fragment">
+
+            <action
+                android:id="@+id/registration_to_logged_in"
+                app:destination="@id/logged_in_graph"
+                app:popUpTo="@id/logged_out_graph"
+                app:popUpToInclusive="true" />
+
+            <action
+                android:id="@+id/registration_to_create_login_credentials"
+                app:destination="@id/create_login_credentials_fragment" />
+
+            <fragment
+                android:id="@+id/enter_profile_data_fragment"
+                android:name="com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.registration.EnterProfileDataFragment"
+                tools:layout="@layout/enter_profile_data_fragment" />
+
+            <fragment
+                android:id="@+id/create_login_credentials_fragment"
+                android:name="com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.registration.CreateLoginCredentialsFragment"
+                tools:layout="@layout/create_login_credentials_fragment" />
+        </navigation>
+    </navigation>
+</navigation>
