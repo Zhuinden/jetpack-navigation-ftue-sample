@@ -56,7 +56,7 @@ class EnterProfileDataFragment : Fragment(R.layout.enter_profile_data_fragment) 
                 navGraphBackstackEntry,
                 Injector.get()
                     .registrationViewModelFactory()
-                    .createFactory(this@EnterProfileDataFragment, arguments ?: Bundle())
+                    .createFactory(navGraphBackstackEntry, arguments ?: Bundle())
             ).get(RegistrationViewModel::class.java)
         }
 

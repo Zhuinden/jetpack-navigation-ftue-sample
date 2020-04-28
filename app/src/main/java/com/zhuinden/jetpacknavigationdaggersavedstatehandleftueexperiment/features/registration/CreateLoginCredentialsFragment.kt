@@ -56,7 +56,7 @@ class CreateLoginCredentialsFragment : Fragment(R.layout.create_login_credential
                 navGraphBackstackEntry,
                 Injector.get()
                     .registrationViewModelFactory()
-                    .createFactory(this@CreateLoginCredentialsFragment, arguments ?: Bundle())
+                    .createFactory(navGraphBackstackEntry, arguments ?: Bundle())
             ).get(RegistrationViewModel::class.java)
         }
 
