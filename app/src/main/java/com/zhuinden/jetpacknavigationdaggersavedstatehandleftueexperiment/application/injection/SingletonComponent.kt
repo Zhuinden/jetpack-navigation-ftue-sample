@@ -30,7 +30,7 @@ interface SingletonComponent {
     fun authenticationManager(): AuthenticationManager
 
     fun loginViewModelFactory(): LoginViewModel.VmFactory.Factory
-    fun registrationViewModelFactory(): RegistrationViewModel.VmFactory.Factory
+    fun registrationViewModelFactory(): RegistrationViewModel.Factory
     fun profileViewModelFactory(): ProfileViewModel.VmFactory
 
     @Component.Factory

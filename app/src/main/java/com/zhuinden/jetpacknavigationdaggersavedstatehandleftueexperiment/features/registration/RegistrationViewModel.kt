@@ -15,9 +15,10 @@
  */
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.registration
 
-import android.os.Bundle
-import androidx.lifecycle.*
-import androidx.savedstate.SavedStateRegistryOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.zhuinden.eventemitter.EventEmitter
@@ -27,30 +28,10 @@ import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.applic
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationCommand
 import com.zhuinden.livedatacombinetuplekt.combineTuple
 
-class RegistrationViewModel(
+class RegistrationViewModel @AssistedInject constructor(
     private val authenticationManager: AuthenticationManager,
-    private val savedStateHandle: SavedStateHandle
+    @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    class VmFactory @AssistedInject constructor(
-        private val authenticationManager: AuthenticationManager,
-        @Assisted savedStateRegistryOwner: SavedStateRegistryOwner,
-        @Assisted defaultArgs: Bundle
-    ) : AbstractSavedStateViewModelFactory(savedStateRegistryOwner, defaultArgs) {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(
-            key: String,
-            modelClass: Class<T>,
-            savedStateHandle: SavedStateHandle
-        ): T = RegistrationViewModel(authenticationManager, savedStateHandle) as T
-
-        @AssistedInject.Factory // https://github.com/square/AssistedInject/issues/141
-        interface Factory {
-            fun createFactory(
-                savedStateRegistryOwner: SavedStateRegistryOwner,
-                defaultArgs: Bundle
-            ): VmFactory
-        }
-    }
 
     private val navigationEmitter: EventEmitter<NavigationCommand> = EventEmitter()
     val navigationCommands: EventSource<NavigationCommand> get() = navigationEmitter
@@ -103,5 +84,12 @@ class RegistrationViewModel(
         navigationEmitter.emit { navController, context ->
             navController.popBackStack()
         }
+    }
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(
+            savedStateHandle: SavedStateHandle
+        ): RegistrationViewModel
     }
 }
