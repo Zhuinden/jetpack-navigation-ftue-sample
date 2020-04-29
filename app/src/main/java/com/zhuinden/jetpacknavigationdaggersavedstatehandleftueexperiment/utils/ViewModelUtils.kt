@@ -49,7 +49,7 @@ inline fun <reified T : ViewModel> Fragment.navGraphSavedStateViewModels(
         backStackEntry.viewModelStore
     }, factoryProducer = {
         backStackEntry.createAbstractSavedStateViewModelFactory(
-            arguments = arguments ?: Bundle(), creator = creator
+            arguments = backStackEntry.arguments ?: Bundle(), creator = creator
         )
     })
 }
