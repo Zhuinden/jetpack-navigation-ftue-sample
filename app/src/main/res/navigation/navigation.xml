@@ -36,7 +36,9 @@
             android:id="@+id/logged_in_to_logged_out"
             app:destination="@id/logged_out_graph"
             app:popUpTo="@id/logged_in_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_from_left"
+            app:exitAnim="@anim/slide_out_to_right" />
 
         <fragment
             android:id="@+id/profile_fragment"
@@ -51,13 +53,17 @@
 
         <action
             android:id="@+id/logged_out_to_registration"
-            app:destination="@id/registration_graph" />
+            app:destination="@id/registration_graph"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left" />
 
         <action
             android:id="@+id/logged_out_to_logged_in"
             app:destination="@id/logged_in_graph"
             app:popUpTo="@id/logged_out_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
 
         <fragment
             android:id="@+id/login_fragment"
@@ -72,11 +78,15 @@
                 android:id="@+id/registration_to_logged_in"
                 app:destination="@id/logged_in_graph"
                 app:popUpTo="@id/logged_out_graph"
-                app:popUpToInclusive="true" />
+                app:popUpToInclusive="true"
+                app:enterAnim="@anim/fragment_fade_enter"
+                app:exitAnim="@anim/fragment_fade_exit" />
 
             <action
-                android:id="@+id/registration_to_create_login_credentials"
-                app:destination="@id/create_login_credentials_fragment" />
+                android:id="@+id/enter_profile_data_to_create_login_credentials"
+                app:destination="@id/create_login_credentials_fragment"
+                app:enterAnim="@anim/slide_in_from_right"
+                app:exitAnim="@anim/slide_out_to_left" />
 
             <fragment
                 android:id="@+id/enter_profile_data_fragment"

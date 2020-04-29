@@ -67,7 +67,7 @@ class RegistrationViewModel @AssistedInject constructor(
         if (fullName.value!!.isNotBlank() && bio.value!!.isNotBlank()) {
             currentState.value = RegistrationState.COLLECT_USER_PASSWORD
             navigationEmitter.emit { navController, context ->
-                navController.navigate(R.id.create_login_credentials_fragment)
+                navController.navigate(R.id.enter_profile_data_to_create_login_credentials)
             }
         }
     }
