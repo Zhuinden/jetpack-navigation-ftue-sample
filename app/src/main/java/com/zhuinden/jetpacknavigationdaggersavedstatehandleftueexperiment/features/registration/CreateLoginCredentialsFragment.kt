@@ -17,6 +17,7 @@ package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.featu
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.Navigation
@@ -53,5 +54,13 @@ class CreateLoginCredentialsFragment : Fragment(R.layout.create_login_credential
         viewModel.navigationCommands.observe(viewLifecycleOwner) { navigationCommand ->
             navigationCommand(Navigation.findNavController(view), requireContext())
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    viewModel.onCreateLoginCredentialsBackEvent()
+                }
+            }
+        )
     }
 }

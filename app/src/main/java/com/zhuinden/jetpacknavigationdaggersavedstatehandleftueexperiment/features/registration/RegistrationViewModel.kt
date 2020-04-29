@@ -82,5 +82,10 @@ class RegistrationViewModel @AssistedInject constructor(
         }
     }
 
-    // FIXME: currentState.value = RegistrationState.COLLECT_USER_PASSWORD on back
+    fun onCreateLoginCredentialsBackEvent() {
+        currentState.value = RegistrationState.COLLECT_USER_PASSWORD
+        navigationEmitter.emit { navController, context ->
+            navController.popBackStack()
+        }
+    }
 }
