@@ -17,7 +17,6 @@ package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.featu
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.Navigation
@@ -25,19 +24,13 @@ import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.databinding.EnterProfileDataFragmentBinding
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.navGraphViewModel
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.navGraphSavedStateViewModels
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onClick
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onTextChanged
 
 
 class EnterProfileDataFragment : Fragment(R.layout.enter_profile_data_fragment) {
-    val backPressListener = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            viewModel.onBackEvent()
-        }
-    }
-
-    private val viewModel by navGraphViewModel(R.id.registration_graph) { handle ->
+    private val viewModel by navGraphSavedStateViewModels(R.id.registration_graph) { handle ->
         Injector.get().registrationViewModelFactory().create(handle)
     }
 
@@ -57,18 +50,8 @@ class EnterProfileDataFragment : Fragment(R.layout.enter_profile_data_fragment) 
             buttonEnterProfileNext.onClick { viewModel.onEnterProfileNextClicked() }
         }
 
-        fun setBackPressListenerDisabledIfApplicable() { // "in place of `onBackEvent()`"
-            if (Navigation.findNavController(requireView()).currentDestination == null /* no entries => finish */) {
-                backPressListener.isEnabled = false
-            }
-        }
-
-        setBackPressListenerDisabledIfApplicable()
-
         viewModel.navigationCommands.observe(viewLifecycleOwner) { navigationCommand ->
             navigationCommand(Navigation.findNavController(view), requireContext())
-
-            setBackPressListenerDisabledIfApplicable() // end "in place of `onBackEvent()`"
         }
     }
 }

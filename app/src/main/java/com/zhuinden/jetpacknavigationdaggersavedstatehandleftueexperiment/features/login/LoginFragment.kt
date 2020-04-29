@@ -19,28 +19,19 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.databinding.LoginFragmentBinding
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.fragmentSavedStateViewModels
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onClick
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onTextChanged
 
 
 class LoginFragment : Fragment(R.layout.login_fragment) {
-    private lateinit var viewModel: LoginViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProvider(
-            this, // no need to scope to NavGraph
-            Injector.get()
-                .loginViewModelFactory()
-                .createFactory(this@LoginFragment, arguments ?: Bundle())
-        ).get(LoginViewModel::class.java)
+    private val viewModel by fragmentSavedStateViewModels { handle ->
+        Injector.get().loginViewModelFactory().create(handle)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

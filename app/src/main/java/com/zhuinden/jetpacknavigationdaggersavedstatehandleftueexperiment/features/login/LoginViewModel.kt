@@ -15,9 +15,9 @@
  */
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.login
 
-import android.os.Bundle
-import androidx.lifecycle.*
-import androidx.savedstate.SavedStateRegistryOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.zhuinden.eventemitter.EventEmitter
@@ -26,29 +26,13 @@ import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationCommand
 
-class LoginViewModel constructor(
+class LoginViewModel @AssistedInject constructor(
     private val authenticationManager: AuthenticationManager,
-    private val savedStateHandle: SavedStateHandle
+    @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    class VmFactory @AssistedInject constructor(
-        private val authenticationManager: AuthenticationManager,
-        @Assisted savedStateRegistryOwner: SavedStateRegistryOwner,
-        @Assisted defaultArgs: Bundle
-    ) : AbstractSavedStateViewModelFactory(savedStateRegistryOwner, defaultArgs) {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(
-            key: String,
-            modelClass: Class<T>,
-            savedStateHandle: SavedStateHandle
-        ): T = LoginViewModel(authenticationManager, savedStateHandle) as T
-
-        @AssistedInject.Factory // https://github.com/square/AssistedInject/issues/141
-        interface Factory {
-            fun createFactory(
-                savedStateRegistryOwner: SavedStateRegistryOwner,
-                defaultArgs: Bundle
-            ): VmFactory
-        }
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(savedStateHandle: SavedStateHandle): LoginViewModel
     }
 
     private val errorEmitter: EventEmitter<String> = EventEmitter()

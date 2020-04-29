@@ -32,6 +32,10 @@ class RegistrationViewModel @AssistedInject constructor(
     private val authenticationManager: AuthenticationManager,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(savedStateHandle: SavedStateHandle): RegistrationViewModel
+    }
 
     private val navigationEmitter: EventEmitter<NavigationCommand> = EventEmitter()
     val navigationCommands: EventSource<NavigationCommand> get() = navigationEmitter
@@ -42,7 +46,8 @@ class RegistrationViewModel @AssistedInject constructor(
         REGISTRATION_COMPLETED
     }
 
-    private var currentState: RegistrationState = RegistrationState.COLLECT_PROFILE_DATA
+    private var currentState: MutableLiveData<RegistrationState> =
+        savedStateHandle.getLiveData("currentState", RegistrationState.COLLECT_PROFILE_DATA)
 
     val fullName: MutableLiveData<String> = savedStateHandle.getLiveData("fullName", "")
     val bio: MutableLiveData<String> = savedStateHandle.getLiveData("bio", "")
@@ -60,7 +65,7 @@ class RegistrationViewModel @AssistedInject constructor(
 
     fun onEnterProfileNextClicked() {
         if (fullName.value!!.isNotBlank() && bio.value!!.isNotBlank()) {
-            currentState = RegistrationState.COLLECT_USER_PASSWORD
+            currentState.value = RegistrationState.COLLECT_USER_PASSWORD
             navigationEmitter.emit { navController, context ->
                 navController.navigate(R.id.create_login_credentials_fragment)
             }
@@ -69,7 +74,7 @@ class RegistrationViewModel @AssistedInject constructor(
 
     fun onRegisterAndLoginClicked() {
         if (username.value!!.isNotBlank() && password.value!!.isNotBlank()) {
-            currentState = RegistrationState.REGISTRATION_COMPLETED
+            currentState.value = RegistrationState.REGISTRATION_COMPLETED
             authenticationManager.saveRegistration()
             navigationEmitter.emit { navController, context ->
                 navController.navigate(R.id.registration_to_logged_in)
@@ -77,19 +82,5 @@ class RegistrationViewModel @AssistedInject constructor(
         }
     }
 
-    fun onBackEvent() {
-        if(currentState == RegistrationState.COLLECT_USER_PASSWORD) {
-            currentState = RegistrationState.COLLECT_PROFILE_DATA
-        }
-        navigationEmitter.emit { navController, context ->
-            navController.popBackStack()
-        }
-    }
-
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(
-            savedStateHandle: SavedStateHandle
-        ): RegistrationViewModel
-    }
+    // FIXME: currentState.value = RegistrationState.COLLECT_USER_PASSWORD on back
 }

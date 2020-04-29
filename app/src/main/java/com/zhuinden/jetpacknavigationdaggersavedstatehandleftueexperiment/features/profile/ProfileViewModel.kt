@@ -17,7 +17,6 @@ package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.featu
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.zhuinden.eventemitter.EventEmitter
 import com.zhuinden.eventemitter.EventSource
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
@@ -25,14 +24,9 @@ import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.applic
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationCommand
 import javax.inject.Inject
 
-class ProfileViewModel(
+class ProfileViewModel @Inject constructor(
     private val authenticationManager: AuthenticationManager
 ): ViewModel() {
-    @Suppress("UNCHECKED_CAST")
-    class VmFactory @Inject constructor(private val authenticationManager: AuthenticationManager): ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T = ProfileViewModel(authenticationManager) as T
-    }
-
     private val navigationEmitter: EventEmitter<NavigationCommand> = EventEmitter()
     val navigationCommands: EventSource<NavigationCommand> get() = navigationEmitter
 

@@ -22,6 +22,7 @@ import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.featur
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.registration.RegistrationViewModel
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
@@ -29,9 +30,9 @@ import javax.inject.Singleton
 interface SingletonComponent {
     fun authenticationManager(): AuthenticationManager
 
-    fun loginViewModelFactory(): LoginViewModel.VmFactory.Factory
+    fun loginViewModelFactory(): LoginViewModel.Factory
     fun registrationViewModelFactory(): RegistrationViewModel.Factory
-    fun profileViewModelFactory(): ProfileViewModel.VmFactory
+    fun profileViewModelFactory(): Provider<ProfileViewModel>
 
     @Component.Factory
     interface Factory {
