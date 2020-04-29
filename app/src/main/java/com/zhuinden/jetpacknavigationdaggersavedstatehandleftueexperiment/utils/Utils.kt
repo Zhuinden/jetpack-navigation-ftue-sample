@@ -17,10 +17,20 @@ package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.createViewModelLazy
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.savedstate.SavedStateRegistryOwner
 
 fun View.onClick(clickListener: (View) -> Unit) {
     setOnClickListener(clickListener)
@@ -74,4 +84,36 @@ inline fun <T : View> T.hideIf(condition: (T) -> Boolean): T {
     }
 
     return this
+}
+
+inline fun <reified T : ViewModel> SavedStateRegistryOwner.createAbstractSavedStateViewModelFactory(
+    arguments: Bundle,
+    crossinline creator: (SavedStateHandle) -> T
+): ViewModelProvider.Factory {
+    return object : AbstractSavedStateViewModelFactory(this, arguments) {
+        override fun <T : ViewModel?> create(
+            key: String,
+            modelClass: Class<T>,
+            handle: SavedStateHandle
+        ): T {
+            @Suppress("UNCHECKED_CAST")
+            return creator(handle) as T
+        }
+    }
+}
+
+inline fun <reified T : ViewModel> Fragment.navGraphViewModel(
+    @IdRes navGraphId: Int,
+    crossinline creator: (SavedStateHandle) -> T
+): Lazy<T> {
+    // Wrapped in lazy to not search the NavController each time we want the backStackEntry
+    val backStackEntry by lazy { findNavController().getBackStackEntry(navGraphId) }
+
+    return createViewModelLazy(T::class, storeProducer = {
+        backStackEntry.viewModelStore
+    }, factoryProducer = {
+        backStackEntry.createAbstractSavedStateViewModelFactory(
+            arguments = arguments ?: Bundle(), creator = creator
+        )
+    })
 }

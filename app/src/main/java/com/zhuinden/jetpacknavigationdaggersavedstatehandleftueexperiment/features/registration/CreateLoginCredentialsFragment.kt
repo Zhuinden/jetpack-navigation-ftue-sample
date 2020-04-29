@@ -16,24 +16,21 @@
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.registration
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.databinding.CreateLoginCredentialsFragmentBinding
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.databinding.CreateLoginCredentialsFragmentBinding
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.navGraphViewModel
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onClick
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onTextChanged
 
 
 class CreateLoginCredentialsFragment : Fragment(R.layout.create_login_credentials_fragment) {
-    private lateinit var viewModel: RegistrationViewModel
 
     val backPressListener = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -41,28 +38,9 @@ class CreateLoginCredentialsFragment : Fragment(R.layout.create_login_credential
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // see https://twitter.com/Zhuinden/status/1255204348067483648
-        if(!::viewModel.isInitialized) { // cannot retrieve in `onCreate` because `NavController` is not ready (to get the NavGraph entry)
-            // solution: move this logic to execute once in `onCreateView` as that is the only callback directly after onCreate()
-            val navController = Navigation.findNavController(requireActivity(), R.id.nav_host)
-            val navGraphBackstackEntry = navController.getBackStackEntry(R.id.registration_graph)
-
-            viewModel = ViewModelProvider(
-                navGraphBackstackEntry,
-                Injector.get()
-                    .registrationViewModelFactory()
-                    .createFactory(navGraphBackstackEntry, arguments ?: Bundle())
-            ).get(RegistrationViewModel::class.java)
-        }
-
-        return super.onCreateView(inflater, container, savedInstanceState)
+    private val viewModel by navGraphViewModel(R.id.registration_graph) { handle ->
+        Injector.get().registrationViewModelFactory().create(handle)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
