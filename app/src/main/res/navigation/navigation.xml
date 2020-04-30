@@ -35,10 +35,12 @@
         <action
             android:id="@+id/logged_in_to_logged_out"
             app:destination="@id/logged_out_graph"
-            app:popUpTo="@id/logged_in_graph"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_from_left"
-            app:exitAnim="@anim/slide_out_to_right" />
+            app:exitAnim="@anim/slide_out_to_right"
+            app:popEnterAnim="@anim/slide_out_to_left"
+            app:popExitAnim="@anim/slide_in_from_left"
+            app:popUpTo="@id/logged_in_graph"
+            app:popUpToInclusive="true" />
 
         <fragment
             android:id="@+id/profile_fragment"
@@ -55,15 +57,19 @@
             android:id="@+id/logged_out_to_registration"
             app:destination="@id/registration_graph"
             app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left" />
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
 
         <action
             android:id="@+id/logged_out_to_logged_in"
             app:destination="@id/logged_in_graph"
-            app:popUpTo="@id/logged_out_graph"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/fragment_fade_enter"
-            app:exitAnim="@anim/fragment_fade_exit" />
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/logged_out_graph"
+            app:popUpToInclusive="true" />
 
         <fragment
             android:id="@+id/login_fragment"
@@ -77,16 +83,20 @@
             <action
                 android:id="@+id/registration_to_logged_in"
                 app:destination="@id/logged_in_graph"
-                app:popUpTo="@id/logged_out_graph"
-                app:popUpToInclusive="true"
                 app:enterAnim="@anim/fragment_fade_enter"
-                app:exitAnim="@anim/fragment_fade_exit" />
+                app:exitAnim="@anim/fragment_fade_exit"
+                app:popEnterAnim="@anim/fragment_fade_enter"
+                app:popExitAnim="@anim/fragment_fade_exit"
+                app:popUpTo="@id/logged_out_graph"
+                app:popUpToInclusive="true" />
 
             <action
                 android:id="@+id/enter_profile_data_to_create_login_credentials"
                 app:destination="@id/create_login_credentials_fragment"
                 app:enterAnim="@anim/slide_in_from_right"
-                app:exitAnim="@anim/slide_out_to_left" />
+                app:exitAnim="@anim/slide_out_to_left"
+                app:popEnterAnim="@anim/slide_in_from_left"
+                app:popExitAnim="@anim/slide_out_to_right" />
 
             <fragment
                 android:id="@+id/enter_profile_data_fragment"
