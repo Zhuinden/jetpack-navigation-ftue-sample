@@ -26,6 +26,7 @@ import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.applic
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.databinding.CreateLoginCredentialsFragmentBinding
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.navGraphSavedStateViewModels
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onClick
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onTextChanged
 
@@ -45,7 +46,7 @@ class CreateLoginCredentialsFragment : Fragment(R.layout.create_login_credential
             textUsername.onTextChanged { username -> viewModel.username.value = username }
             textPassword.onTextChanged { password -> viewModel.password.value = password }
 
-            viewModel.isRegisterAndLoginEnabled.observe(viewLifecycleOwner) { enabled ->
+            observe(viewModel.isRegisterAndLoginEnabled) { enabled ->
                 buttonRegisterAndLogin.isEnabled = enabled
             }
             buttonRegisterAndLogin.onClick { viewModel.onRegisterAndLoginClicked() }

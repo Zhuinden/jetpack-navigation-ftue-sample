@@ -25,6 +25,7 @@ import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.fragmentViewModels
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.observe
 
 class ProfileFragment: Fragment(R.layout.profile_fragment) {
     private val viewModel by fragmentViewModels {
@@ -40,6 +41,6 @@ class ProfileFragment: Fragment(R.layout.profile_fragment) {
             navigationCommand(Navigation.findNavController(view), requireContext())
         }
 
-        viewModel.activationCheck.observe(viewLifecycleOwner) {}
+        observe(viewModel.activationCheck) {}
     }
 }

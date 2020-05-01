@@ -25,6 +25,7 @@ import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.applic
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.databinding.EnterProfileDataFragmentBinding
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.navGraphSavedStateViewModels
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onClick
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onTextChanged
 
@@ -44,7 +45,7 @@ class EnterProfileDataFragment : Fragment(R.layout.enter_profile_data_fragment) 
             textFullName.onTextChanged { fullName -> viewModel.fullName.value = fullName }
             textBio.onTextChanged { bio -> viewModel.bio.value = bio }
 
-            viewModel.isEnterProfileNextEnabled.observe(viewLifecycleOwner) { enabled ->
+            observe(viewModel.isEnterProfileNextEnabled) { enabled ->
                 buttonEnterProfileNext.isEnabled = enabled
             }
             buttonEnterProfileNext.onClick { viewModel.onEnterProfileNextClicked() }
