@@ -17,7 +17,6 @@ package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 
@@ -25,7 +24,7 @@ import androidx.lifecycle.Observer
  * Utils to observe liveData in a cleaner way from an Activity.
  */
 inline fun <T> AppCompatActivity.observe(liveData: LiveData<T>, crossinline observer: (T) -> Unit) {
-    observeLifeCycle(liveData, observer)
+    liveData.observe(this, Observer { observer(it) })
 }
 
 /**
@@ -35,7 +34,12 @@ inline fun <T> AppCompatActivity.observeOnce(
     liveData: LiveData<T>,
     crossinline observer: (T) -> Unit
 ) {
-    observeLifeCycleOnce(liveData, observer)
+    liveData.observe(this, object : Observer<T> {
+        override fun onChanged(t: T) {
+            liveData.removeObserver(this)
+            observer(t)
+        }
+    })
 }
 
 /**
@@ -45,7 +49,7 @@ inline fun <T> AppCompatActivity.observeOnce(
  * being tied to the enclosing Fragment's lifecycle
  */
 inline fun <T> Fragment.observe(liveData: LiveData<T>, crossinline observer: (T) -> Unit) {
-    viewLifecycleOwner.observeLifeCycle(liveData, observer)
+    liveData.observe(viewLifecycleOwner, Observer { observer(it) })
 }
 
 /**
@@ -55,31 +59,7 @@ inline fun <T> Fragment.observe(liveData: LiveData<T>, crossinline observer: (T)
  * being tied to the enclosing Fragment's lifecycle
  */
 inline fun <T> Fragment.observeOnce(liveData: LiveData<T>, crossinline observer: (T) -> Unit) {
-    viewLifecycleOwner.observeLifeCycleOnce(liveData, observer)
-}
-
-/**
- * Utils to observe liveData in a cleaner way from any LifecycleOwner.
- *
- * This should not be used with Fragment as lifecycleOwner
- */
-inline fun <T> LifecycleOwner.observeLifeCycle(
-    liveData: LiveData<T>,
-    crossinline observer: (T) -> Unit
-) {
-    liveData.observe(this, Observer { observer(it) })
-}
-
-/**
- * Utils to observe a liveData FOR ONE VALUE in a cleaner way from any LifecycleOwner.
- *
- * This should not be used with Fragment as lifecycleOwner
- */
-inline fun <T> LifecycleOwner.observeLifeCycleOnce(
-    liveData: LiveData<T>,
-    crossinline observer: (T) -> Unit
-) {
-    liveData.observe(this, object : Observer<T> {
+    liveData.observe(viewLifecycleOwner, object : Observer<T> {
         override fun onChanged(t: T) {
             liveData.removeObserver(this)
             observer(t)
