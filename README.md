@@ -8,7 +8,7 @@ The sample is based on the FTUE-rewrite in [Simple-Stack Tutorial: First-Time Us
 
 The original version of the "FTUE sample" is based on the ["Conditional Navigation" section of Jetpack Navigation documentation](https://developer.android.com/guide/navigation/navigation-conditional#first-time_user_experience).
 
-Please beware that the original FTUE sample has various anti-patterns that are fixed in this sample:
+Please beware that the original FTUE approach outlined in the documentation of Jetpack Navigation has various anti-patterns that are fixed in this sample:
 
 - Jetpack Navigation docs uses `by activityViewModels()` instead of properly scoping the ViewModel to the `NavBackStackEntry` of the `registration_graph`
 
