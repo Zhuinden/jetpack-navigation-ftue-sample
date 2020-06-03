@@ -2,7 +2,7 @@
 
 This is a sample repository for the aforementioned tools (primarily Jetpack Navigation + NavGraph-scoped ViewModel + SavedStateHandle + Dagger + AssistedInject).
 
-The sample is based on the FTUE-rewrite in [Simple-Stack Tutorial: First-Time User Experience with RxJava](https://github.com/Zhuinden/simple-stack-tutorials/tree/93554f7000efe49fca39de7ca707eb6843a5eaf8/app/src/main/java/com/zhuinden/simplestacktutorials/steps/step_9).
+It can be directly compared against the [Simple-Stack FTUE Sample using RxJava](https://github.com/Zhuinden/simple-stack-ftue-sample).
 
 . . .
 
