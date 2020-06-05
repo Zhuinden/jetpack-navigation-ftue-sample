@@ -20,7 +20,12 @@
             android:id="@+id/splash_to_logged_in"
             app:destination="@id/logged_in_graph"
             app:popUpTo="@id/splash_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true">
+            <argument
+                android:name="username"
+                app:argType="string"
+                app:nullable="false" />
+        </action>
 
         <fragment
             android:id="@+id/splash_fragment"
@@ -31,6 +36,10 @@
     <navigation
         android:id="@+id/logged_in_graph"
         app:startDestination="@id/profile_fragment">
+        <argument
+            android:name="username"
+            app:argType="string"
+            app:nullable="false" />
 
         <action
             android:id="@+id/logged_in_to_logged_out"
@@ -45,7 +54,13 @@
         <fragment
             android:id="@+id/profile_fragment"
             android:name="com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.profile.ProfileFragment"
-            tools:layout="@layout/profile_fragment" />
+            tools:layout="@layout/profile_fragment">
+
+            <argument
+                android:name="username"
+                app:argType="string"
+                app:nullable="false" />
+        </fragment>
 
     </navigation>
 
@@ -69,7 +84,12 @@
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit"
             app:popUpTo="@id/logged_out_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true">
+            <argument
+                android:name="username"
+                app:argType="string"
+                app:nullable="false" />
+        </action>
 
         <fragment
             android:id="@+id/login_fragment"
@@ -88,7 +108,12 @@
                 app:popEnterAnim="@anim/fragment_fade_enter"
                 app:popExitAnim="@anim/fragment_fade_exit"
                 app:popUpTo="@id/logged_out_graph"
-                app:popUpToInclusive="true" />
+                app:popUpToInclusive="true">
+                <argument
+                    android:name="username"
+                    app:argType="string"
+                    app:nullable="false" />
+            </action>
 
             <action
                 android:id="@+id/enter_profile_data_to_create_login_credentials"

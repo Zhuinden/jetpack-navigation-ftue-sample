@@ -24,6 +24,7 @@ import com.squareup.inject.assisted.AssistedInject
 import com.zhuinden.eventemitter.EventEmitter
 import com.zhuinden.eventemitter.EventSource
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.RegistrationGraphDirections
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationCommand
 import com.zhuinden.livedatacombinetuplekt.combineTuple
@@ -74,10 +75,11 @@ class RegistrationViewModel @AssistedInject constructor(
 
     fun onRegisterAndLoginClicked() {
         if (username.value!!.isNotBlank() && password.value!!.isNotBlank()) {
+            val username = username.value!!
             currentState.value = RegistrationState.REGISTRATION_COMPLETED
-            authenticationManager.saveRegistration()
+            authenticationManager.saveRegistration(username)
             navigationEmitter.emit { navController, context ->
-                navController.navigate(R.id.registration_to_logged_in)
+                navController.navigate(RegistrationGraphDirections.registrationToLoggedIn(username))
             }
         }
     }

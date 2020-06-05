@@ -21,6 +21,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.SplashGraphDirections
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
 
 class SplashFragment : Fragment(R.layout.splash_fragment) {
@@ -30,7 +31,8 @@ class SplashFragment : Fragment(R.layout.splash_fragment) {
         val authenticationManager = Injector.get().authenticationManager()
 
         if (authenticationManager.isAuthenticated()) {
-            Navigation.findNavController(requireView()).navigate(R.id.splash_to_logged_in)
+            Navigation.findNavController(requireView())
+                .navigate(SplashGraphDirections.splashToLoggedIn(authenticationManager.getAuthenticatedUser()))
         } else {
             Navigation.findNavController(requireView()).navigate(R.id.splash_to_logged_out)
         }

@@ -22,6 +22,7 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.zhuinden.eventemitter.EventEmitter
 import com.zhuinden.eventemitter.EventSource
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.LoggedOutGraphDirections
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationCommand
@@ -46,10 +47,12 @@ class LoginViewModel @AssistedInject constructor(
 
     fun onLoginClicked() {
         if (username.value!!.isNotBlank() && password.value!!.isNotBlank()) {
-            authenticationManager.saveRegistration()
+            val username = username.value!!
+
+            authenticationManager.saveRegistration(username)
 
             navigationEmitter.emit { navController, context ->
-                navController.navigate(R.id.logged_out_to_logged_in)
+                navController.navigate(LoggedOutGraphDirections.loggedOutToLoggedIn(username))
             }
         } else {
             errorEmitter.emit("Invalid username or password!")

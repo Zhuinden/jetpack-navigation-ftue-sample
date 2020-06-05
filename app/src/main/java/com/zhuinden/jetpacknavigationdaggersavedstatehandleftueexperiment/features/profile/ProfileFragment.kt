@@ -34,7 +34,9 @@ class ProfileFragment: Fragment(R.layout.profile_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Toast.makeText(requireContext(), "Welcome!", Toast.LENGTH_LONG).show()
+        val args = ProfileFragmentArgs.fromBundle(requireArguments())
+
+        Toast.makeText(requireContext(), "Welcome ${args.username}!", Toast.LENGTH_LONG).show()
 
         viewModel.navigationCommands.observe(viewLifecycleOwner) { navigationCommand ->
             navigationCommand(Navigation.findNavController(view), requireContext())
