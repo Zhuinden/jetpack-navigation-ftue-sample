@@ -15,9 +15,7 @@
  */
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.splash
 
-import android.os.Bundle
 import android.os.Handler
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
@@ -38,13 +36,13 @@ class SplashFragment : Fragment(R.layout.splash_fragment) {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         handler.postDelayed(finishSplash, 1L)
     }
 
-    override fun onDestroyView() {
+    override fun onStop() {
         handler.removeCallbacks(finishSplash)
-        super.onDestroyView()
+        super.onStop()
     }
 }
