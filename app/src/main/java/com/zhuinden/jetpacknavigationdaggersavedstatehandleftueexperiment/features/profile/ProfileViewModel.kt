@@ -17,23 +17,25 @@ package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.featu
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.zhuinden.eventemitter.EventEmitter
-import com.zhuinden.eventemitter.EventSource
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationCommand
-import javax.inject.Inject
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
 
-class ProfileViewModel @Inject constructor(
-    private val authenticationManager: AuthenticationManager
+class ProfileViewModel @AssistedInject constructor(
+    private val authenticationManager: AuthenticationManager,
+    @Assisted private val navigationDispatcher: NavigationDispatcher
 ): ViewModel() {
-    private val navigationEmitter: EventEmitter<NavigationCommand> = EventEmitter()
-    val navigationCommands: EventSource<NavigationCommand> get() = navigationEmitter
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(navigationDispatcher: NavigationDispatcher): ProfileViewModel
+    }
 
     val activationCheck: LiveData<Unit> = object: LiveData<Unit>(Unit) {
         override fun onActive() {
             if (!authenticationManager.isAuthenticated()) {
-                navigationEmitter.emit { navController, context ->
+                navigationDispatcher.emit { navController, context ->
                     navController.navigate(R.id.logged_in_to_logged_out)
                 }
             }

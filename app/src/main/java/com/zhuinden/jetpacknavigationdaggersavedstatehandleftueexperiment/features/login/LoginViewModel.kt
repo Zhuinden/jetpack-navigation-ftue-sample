@@ -25,22 +25,23 @@ import com.zhuinden.eventemitter.EventSource
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.LoggedOutGraphDirections
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationCommand
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
 
 class LoginViewModel @AssistedInject constructor(
     private val authenticationManager: AuthenticationManager,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    @Assisted private val savedStateHandle: SavedStateHandle,
+    @Assisted private val navigationDispatcher: NavigationDispatcher
 ) : ViewModel() {
     @AssistedInject.Factory
     interface Factory {
-        fun create(savedStateHandle: SavedStateHandle): LoginViewModel
+        fun create(
+            savedStateHandle: SavedStateHandle,
+            navigationDispatcher: NavigationDispatcher
+        ): LoginViewModel
     }
 
     private val errorEmitter: EventEmitter<String> = EventEmitter()
     val errorEvents: EventSource<String> get() = errorEmitter
-
-    private val navigationEmitter: EventEmitter<NavigationCommand> = EventEmitter()
-    val navigationCommands: EventSource<NavigationCommand> get() = navigationEmitter
 
     val username: MutableLiveData<String> = savedStateHandle.getLiveData("username", "")
     val password: MutableLiveData<String> = savedStateHandle.getLiveData("password", "")
@@ -51,7 +52,7 @@ class LoginViewModel @AssistedInject constructor(
 
             authenticationManager.saveRegistration(username)
 
-            navigationEmitter.emit { navController, context ->
+            navigationDispatcher.emit { navController, context ->
                 navController.navigate(LoggedOutGraphDirections.loggedOutToLoggedIn(username))
             }
         } else {
@@ -60,7 +61,7 @@ class LoginViewModel @AssistedInject constructor(
     }
 
     fun onRegisterClicked() {
-        navigationEmitter.emit { navController, context ->
+        navigationDispatcher.emit { navController, context ->
             navController.navigate(R.id.logged_out_to_registration)
         }
     }

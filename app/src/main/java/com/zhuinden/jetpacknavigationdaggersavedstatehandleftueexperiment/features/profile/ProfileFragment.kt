@@ -19,16 +19,18 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
-import androidx.navigation.Navigation
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.fragmentViewModels
 
 class ProfileFragment: Fragment(R.layout.profile_fragment) {
+    private val navigationDispatcher by activityViewModels<NavigationDispatcher>()
+
     private val viewModel by fragmentViewModels {
-        Injector.get().profileViewModelFactory().get()
+        Injector.get().profileViewModelFactory().create(navigationDispatcher)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,10 +39,6 @@ class ProfileFragment: Fragment(R.layout.profile_fragment) {
         val args = ProfileFragmentArgs.fromBundle(requireArguments())
 
         Toast.makeText(requireContext(), "Welcome ${args.username}!", Toast.LENGTH_LONG).show()
-
-        viewModel.navigationCommands.observe(viewLifecycleOwner) { navigationCommand ->
-            navigationCommand(Navigation.findNavController(view), requireContext())
-        }
 
         viewModel.activationCheck.observe(viewLifecycleOwner) {}
     }

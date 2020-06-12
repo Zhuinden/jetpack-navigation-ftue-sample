@@ -16,14 +16,24 @@
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
 
 class MainActivity : AppCompatActivity() {
+    private val navigationDispatcher by viewModels<NavigationDispatcher>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        navigationDispatcher.navigationCommands.observe(this) { command ->
+            command.invoke(Navigation.findNavController(this, R.id.nav_host), this)
+        }
     }
 
     override fun onDestroy() {
