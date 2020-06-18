@@ -16,16 +16,21 @@
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val navigationDispatcher by viewModels<NavigationDispatcher>()
+    @Inject
+    lateinit var authenticationManager: AuthenticationManager
+
+    @Inject
+    lateinit var navigationDispatcher: NavigationDispatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
 
         if (isFinishing) { // for sample's sake
-            Injector.get().authenticationManager().clearRegistration()
+            authenticationManager.clearRegistration()
         }
     }
 }

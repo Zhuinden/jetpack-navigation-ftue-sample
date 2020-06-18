@@ -15,30 +15,23 @@
  */
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.login
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
 import com.zhuinden.eventemitter.EventEmitter
 import com.zhuinden.eventemitter.EventSource
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.LoggedOutGraphDirections
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.HiltAssisted
 
-class LoginViewModel @AssistedInject constructor(
+class LoginViewModel @ViewModelInject constructor(
     private val authenticationManager: AuthenticationManager,
-    @Assisted private val savedStateHandle: SavedStateHandle,
-    @Assisted private val navigationDispatcher: NavigationDispatcher
+    private val navigationDispatcher: NavigationDispatcher,
+    @HiltAssisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(
-            savedStateHandle: SavedStateHandle,
-            navigationDispatcher: NavigationDispatcher
-        ): LoginViewModel
-    }
 
     private val errorEmitter: EventEmitter<String> = EventEmitter()
     val errorEvents: EventSource<String> get() = errorEmitter

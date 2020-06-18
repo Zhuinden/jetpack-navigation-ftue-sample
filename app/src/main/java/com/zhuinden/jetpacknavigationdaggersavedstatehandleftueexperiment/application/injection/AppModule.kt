@@ -22,16 +22,17 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 
 
 @Module
+@InstallIn(ApplicationComponent::class)
 object AppModule {
-    @JvmStatic
     @Provides
     @Suppress("DEPRECATION") // w/e
     fun sharedPref(app: Application): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(app)
 
-    @JvmStatic
     @Provides
     fun appContext(app: Application): Context = app
 }

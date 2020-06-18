@@ -19,23 +19,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.databinding.CreateLoginCredentialsFragmentBinding
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.navGraphSavedStateViewModels
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.hiltNavGraphViewModels
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onClick
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onTextChanged
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CreateLoginCredentialsFragment : Fragment(R.layout.create_login_credentials_fragment) {
-    private val navigationDispatcher by activityViewModels<NavigationDispatcher>()
-
-    private val viewModel by navGraphSavedStateViewModels(R.id.registration_graph) { handle ->
-        Injector.get().registrationViewModelFactory().create(handle, navigationDispatcher)
-    }
+    private val viewModel by hiltNavGraphViewModels<RegistrationViewModel>(R.id.registration_graph) // https://github.com/google/dagger/issues/1938
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

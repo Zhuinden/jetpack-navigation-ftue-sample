@@ -1,10 +1,9 @@
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation
 
-import androidx.lifecycle.ViewModel
 import com.zhuinden.eventemitter.EventEmitter
 import com.zhuinden.eventemitter.EventSource
 
-class NavigationDispatcher : ViewModel() {
+class NavigationDispatcher {
     private val navigationEmitter: EventEmitter<NavigationCommand> = EventEmitter()
     val navigationCommands: EventSource<NavigationCommand> = navigationEmitter
 

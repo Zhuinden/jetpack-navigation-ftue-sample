@@ -15,24 +15,20 @@
  */
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.profile
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
+
+
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
 
-class ProfileViewModel @AssistedInject constructor(
+class ProfileViewModel @ViewModelInject constructor(
     private val authenticationManager: AuthenticationManager,
-    @Assisted private val navigationDispatcher: NavigationDispatcher
-): ViewModel() {
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(navigationDispatcher: NavigationDispatcher): ProfileViewModel
-    }
-
-    val activationCheck: LiveData<Unit> = object: LiveData<Unit>(Unit) {
+    private val navigationDispatcher: NavigationDispatcher
+) : ViewModel() {
+    val activationCheck: LiveData<Unit> = object : LiveData<Unit>(Unit) {
         override fun onActive() {
             if (!authenticationManager.isAuthenticated()) {
                 navigationDispatcher.emit { navController, context ->

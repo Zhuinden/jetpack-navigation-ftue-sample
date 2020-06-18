@@ -15,31 +15,23 @@
  */
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.registration
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.RegistrationGraphDirections
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
+import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.HiltAssisted
 import com.zhuinden.livedatacombinetuplekt.combineTuple
 
-class RegistrationViewModel @AssistedInject constructor(
+class RegistrationViewModel @ViewModelInject constructor(
     private val authenticationManager: AuthenticationManager,
-    @Assisted private val savedStateHandle: SavedStateHandle,
-    @Assisted private val navigationDispatcher: NavigationDispatcher
+    private val navigationDispatcher: NavigationDispatcher,
+    @HiltAssisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(
-            savedStateHandle: SavedStateHandle,
-            navigationDispatcher: NavigationDispatcher
-        ): RegistrationViewModel
-    }
-
     enum class RegistrationState { // this is actually kinda superfluous/unnecessary but ok
         COLLECT_PROFILE_DATA,
         COLLECT_USER_PASSWORD,
