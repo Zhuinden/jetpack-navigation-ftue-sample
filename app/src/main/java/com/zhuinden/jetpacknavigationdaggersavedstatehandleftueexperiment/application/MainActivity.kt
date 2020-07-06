@@ -35,10 +35,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        navigationDispatcher.navigationCommands.observe(this) { command ->
-            command.invoke(Navigation.findNavController(this, R.id.nav_host), this)
-        }
     }
 
     override fun onDestroy() {

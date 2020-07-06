@@ -58,8 +58,8 @@ class RegistrationViewModel @ViewModelInject constructor(
     fun onEnterProfileNextClicked() {
         if (fullName.value!!.isNotBlank() && bio.value!!.isNotBlank()) {
             currentState.value = RegistrationState.COLLECT_USER_PASSWORD
-            navigationDispatcher.emit { navController, context ->
-                navController.navigate(R.id.enter_profile_data_to_create_login_credentials)
+            navigationDispatcher.emit {
+                navigate(R.id.enter_profile_data_to_create_login_credentials)
             }
         }
     }
@@ -69,16 +69,12 @@ class RegistrationViewModel @ViewModelInject constructor(
             val username = username.value!!
             currentState.value = RegistrationState.REGISTRATION_COMPLETED
             authenticationManager.saveRegistration(username)
-            navigationDispatcher.emit { navController, context ->
-                navController.navigate(RegistrationGraphDirections.registrationToLoggedIn(username))
-            }
+            navigationDispatcher.emit { navigate(RegistrationGraphDirections.registrationToLoggedIn(username))}
         }
     }
 
     fun onCreateLoginCredentialsBackEvent() {
         currentState.value = RegistrationState.COLLECT_USER_PASSWORD
-        navigationDispatcher.emit { navController, context ->
-            navController.popBackStack()
-        }
+        navigationDispatcher.emit { popBackStack() }
     }
 }

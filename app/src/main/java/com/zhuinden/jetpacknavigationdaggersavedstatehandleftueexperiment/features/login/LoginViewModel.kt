@@ -45,8 +45,8 @@ class LoginViewModel @ViewModelInject constructor(
 
             authenticationManager.saveRegistration(username)
 
-            navigationDispatcher.emit { navController, context ->
-                navController.navigate(LoggedOutGraphDirections.loggedOutToLoggedIn(username))
+            navigationDispatcher.emit {
+                navigate(LoggedOutGraphDirections.loggedOutToLoggedIn(username))
             }
         } else {
             errorEmitter.emit("Invalid username or password!")
@@ -54,8 +54,6 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun onRegisterClicked() {
-        navigationDispatcher.emit { navController, context ->
-            navController.navigate(R.id.logged_out_to_registration)
-        }
+        navigationDispatcher.emit { navigate(R.id.logged_out_to_registration) }
     }
 }

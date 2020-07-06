@@ -31,8 +31,8 @@ class ProfileViewModel @ViewModelInject constructor(
     val activationCheck: LiveData<Unit> = object : LiveData<Unit>(Unit) {
         override fun onActive() {
             if (!authenticationManager.isAuthenticated()) {
-                navigationDispatcher.emit { navController, context ->
-                    navController.navigate(R.id.logged_in_to_logged_out)
+                navigationDispatcher.emit {
+                    navigate(R.id.logged_in_to_logged_out)
                 }
             }
         }
