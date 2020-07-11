@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navigationDispatcher.navigationCommands.observe(this) { command ->
-            command.invoke(Navigation.findNavController(this, R.id.nav_host), this)
+            Navigation.findNavController(this, R.id.nav_host).command(this)
         }
     }
 
