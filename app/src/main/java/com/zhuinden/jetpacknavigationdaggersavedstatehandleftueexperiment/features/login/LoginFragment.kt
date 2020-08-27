@@ -22,12 +22,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.databinding.LoginFragmentBinding
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.fragmentSavedStateViewModels
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onClick
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onTextChanged
+import com.zhuinden.liveeventsample.utils.observe
 
 
 class LoginFragment : Fragment(R.layout.login_fragment) {

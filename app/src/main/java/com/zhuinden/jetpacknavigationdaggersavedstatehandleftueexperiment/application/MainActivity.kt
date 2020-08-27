@@ -21,8 +21,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
+import com.zhuinden.liveeventsample.utils.observe
 
 class MainActivity : AppCompatActivity() {
     private val navigationDispatcher by viewModels<NavigationDispatcher>()
