@@ -25,7 +25,7 @@ import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.RegistrationGraphDirections
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
-import com.zhuinden.livedatacombinetuplekt.combineTuple
+import com.zhuinden.livedatavalidatebykt.validateBy
 
 class RegistrationViewModel @AssistedInject constructor(
     private val authenticationManager: AuthenticationManager,
@@ -52,16 +52,18 @@ class RegistrationViewModel @AssistedInject constructor(
     val fullName: MutableLiveData<String> = savedStateHandle.getLiveData("fullName", "")
     val bio: MutableLiveData<String> = savedStateHandle.getLiveData("bio", "")
 
-    val isEnterProfileNextEnabled = combineTuple(fullName, bio).map { (fullName, bio) ->
-        fullName!!.isNotBlank() && bio!!.isNotBlank()
-    }
+    val isEnterProfileNextEnabled = validateBy(
+        fullName.map { it.isNotBlank() },
+        bio.map { it.isNotBlank() }
+    )
 
     val username: MutableLiveData<String> = savedStateHandle.getLiveData("username", "")
     val password: MutableLiveData<String> = savedStateHandle.getLiveData("password", "")
 
-    val isRegisterAndLoginEnabled = combineTuple(username, password).map { (username, password) ->
-        username!!.isNotBlank() && password!!.isNotBlank()
-    }
+    val isRegisterAndLoginEnabled = validateBy(
+        username.map { it.isNotBlank() },
+        password.map { it.isNotBlank() }
+    )
 
     fun onEnterProfileNextClicked() {
         if (fullName.value!!.isNotBlank() && bio.value!!.isNotBlank()) {
