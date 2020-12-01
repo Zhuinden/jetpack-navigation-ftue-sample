@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Username"
+            android:saveEnabled="false"
             android:minWidth="180dp"
             android:singleLine="true" />
 
@@ -23,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Password"
+            android:saveEnabled="false"
             android:inputType="textPassword"
             android:minWidth="180dp"
             android:singleLine="true" />

@@ -19,8 +19,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.events.observe
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
+import com.zhuinden.liveevent.observe
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

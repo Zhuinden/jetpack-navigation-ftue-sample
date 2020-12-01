@@ -20,7 +20,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
+
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import dagger.hilt.android.AndroidEntryPoint
 
