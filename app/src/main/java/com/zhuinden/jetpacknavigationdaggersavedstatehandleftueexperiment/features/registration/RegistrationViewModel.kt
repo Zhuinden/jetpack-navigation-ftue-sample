@@ -19,27 +19,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.RegistrationGraphDirections
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
+import com.zhuinden.livedatacombinetuplekt.combineTuple
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import com.zhuinden.livedatavalidatebykt.validateBy
 
-class RegistrationViewModel @AssistedInject constructor(
+@HiltViewModel
+class RegistrationViewModel @Inject constructor(
     private val authenticationManager: AuthenticationManager,
-    @Assisted private val savedStateHandle: SavedStateHandle,
-    @Assisted private val navigationDispatcher: NavigationDispatcher
+    private val navigationDispatcher: NavigationDispatcher,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(
-            savedStateHandle: SavedStateHandle,
-            navigationDispatcher: NavigationDispatcher
-        ): RegistrationViewModel
-    }
-
     enum class RegistrationState { // this is actually kinda superfluous/unnecessary but ok
         COLLECT_PROFILE_DATA,
         COLLECT_USER_PASSWORD,
@@ -68,8 +62,8 @@ class RegistrationViewModel @AssistedInject constructor(
     fun onEnterProfileNextClicked() {
         if (fullName.value!!.isNotBlank() && bio.value!!.isNotBlank()) {
             currentState.value = RegistrationState.COLLECT_USER_PASSWORD
-            navigationDispatcher.emit { navController, context ->
-                navController.navigate(R.id.enter_profile_data_to_create_login_credentials)
+            navigationDispatcher.emit {
+                navigate(R.id.enter_profile_data_to_create_login_credentials)
             }
         }
     }
@@ -79,16 +73,12 @@ class RegistrationViewModel @AssistedInject constructor(
             val username = username.value!!
             currentState.value = RegistrationState.REGISTRATION_COMPLETED
             authenticationManager.saveRegistration(username)
-            navigationDispatcher.emit { navController, context ->
-                navController.navigate(RegistrationGraphDirections.registrationToLoggedIn(username))
-            }
+            navigationDispatcher.emit { navigate(RegistrationGraphDirections.registrationToLoggedIn(username))}
         }
     }
 
     fun onCreateLoginCredentialsBackEvent() {
         currentState.value = RegistrationState.COLLECT_USER_PASSWORD
-        navigationDispatcher.emit { navController, context ->
-            navController.popBackStack()
-        }
+        navigationDispatcher.emit { popBackStack() }
     }
 }

@@ -1,10 +1,12 @@
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation
 
-import androidx.lifecycle.ViewModel
 import com.zhuinden.eventemitter.EventEmitter
 import com.zhuinden.eventemitter.EventSource
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import javax.inject.Inject
 
-class NavigationDispatcher : ViewModel() {
+@ActivityRetainedScoped
+class NavigationDispatcher @Inject constructor() {
     private val navigationEmitter: EventEmitter<NavigationCommand> = EventEmitter()
     val navigationCommands: EventSource<NavigationCommand> = navigationEmitter
 

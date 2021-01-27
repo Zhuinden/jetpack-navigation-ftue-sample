@@ -19,23 +19,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.databinding.LoginFragmentBinding
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.fragmentSavedStateViewModels
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onClick
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onTextChanged
-import com.zhuinden.liveeventsample.utils.observe
+import com.zhuinden.liveevent.observe
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.login_fragment) {
-    private val navigationDispatcher by activityViewModels<NavigationDispatcher>()
-
-    private val viewModel by fragmentSavedStateViewModels { handle ->
-        Injector.get().loginViewModelFactory().create(handle, navigationDispatcher)
-    }
+    private val viewModel by viewModels<LoginViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

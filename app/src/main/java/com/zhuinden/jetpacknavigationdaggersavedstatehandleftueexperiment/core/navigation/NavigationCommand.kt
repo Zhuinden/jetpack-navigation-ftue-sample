@@ -18,4 +18,4 @@ package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.
 import android.content.Context
 import androidx.navigation.NavController
 
-typealias NavigationCommand = (NavController, Context) -> Unit
+typealias NavigationCommand = NavController.(Context) -> Unit

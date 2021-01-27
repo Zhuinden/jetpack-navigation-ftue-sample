@@ -19,19 +19,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
+import androidx.fragment.app.viewModels
+
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.injection.Injector
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.fragmentViewModels
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment: Fragment(R.layout.profile_fragment) {
-    private val navigationDispatcher by activityViewModels<NavigationDispatcher>()
-
-    private val viewModel by fragmentViewModels {
-        Injector.get().profileViewModelFactory().create(navigationDispatcher)
-    }
+    private val viewModel by viewModels<ProfileViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

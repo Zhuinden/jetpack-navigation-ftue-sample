@@ -35,6 +35,4 @@ class AuthenticationManager @Inject constructor(val sharedPref: SharedPreference
     fun getAuthenticatedUser(): String {
         return checkNotNull(sharedPref.getString("username", "").takeIf { it!!.isNotEmpty() })
     }
-
-    var authToken: String = "" // why would this be in the viewModel?
 }

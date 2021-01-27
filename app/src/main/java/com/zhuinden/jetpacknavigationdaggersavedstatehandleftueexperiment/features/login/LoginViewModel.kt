@@ -18,27 +18,21 @@ package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.featu
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
 import com.zhuinden.eventemitter.EventEmitter
 import com.zhuinden.eventemitter.EventSource
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.LoggedOutGraphDirections
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel @AssistedInject constructor(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val authenticationManager: AuthenticationManager,
-    @Assisted private val savedStateHandle: SavedStateHandle,
-    @Assisted private val navigationDispatcher: NavigationDispatcher
+    private val navigationDispatcher: NavigationDispatcher,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(
-            savedStateHandle: SavedStateHandle,
-            navigationDispatcher: NavigationDispatcher
-        ): LoginViewModel
-    }
 
     private val errorEmitter: EventEmitter<String> = EventEmitter()
     val errorEvents: EventSource<String> get() = errorEmitter
@@ -52,8 +46,8 @@ class LoginViewModel @AssistedInject constructor(
 
             authenticationManager.saveRegistration(username)
 
-            navigationDispatcher.emit { navController, context ->
-                navController.navigate(LoggedOutGraphDirections.loggedOutToLoggedIn(username))
+            navigationDispatcher.emit {
+                navigate(LoggedOutGraphDirections.loggedOutToLoggedIn(username))
             }
         } else {
             errorEmitter.emit("Invalid username or password!")
@@ -61,8 +55,6 @@ class LoginViewModel @AssistedInject constructor(
     }
 
     fun onRegisterClicked() {
-        navigationDispatcher.emit { navController, context ->
-            navController.navigate(R.id.logged_out_to_registration)
-        }
+        navigationDispatcher.emit { navigate(R.id.logged_out_to_registration) }
     }
 }
