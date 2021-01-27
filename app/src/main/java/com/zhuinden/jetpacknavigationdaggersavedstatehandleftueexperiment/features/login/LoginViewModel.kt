@@ -15,7 +15,6 @@
  */
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.login
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -25,12 +24,14 @@ import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.Logged
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.HiltAssisted
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel @ViewModelInject constructor(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val authenticationManager: AuthenticationManager,
     private val navigationDispatcher: NavigationDispatcher,
-    @HiltAssisted private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val errorEmitter: EventEmitter<String> = EventEmitter()

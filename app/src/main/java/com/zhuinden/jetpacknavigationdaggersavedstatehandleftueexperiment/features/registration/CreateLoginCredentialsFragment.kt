@@ -19,25 +19,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.databinding.CreateLoginCredentialsFragmentBinding
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.accessor
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.navGraphSavedStateViewModels
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onClick
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CreateLoginCredentialsFragment : Fragment(R.layout.create_login_credentials_fragment) {
-    private val viewModel by navGraphSavedStateViewModels(R.id.registration_graph) { savedStateHandle ->
-        RegistrationViewModel(
-            accessor<AuthenticationManager.Accessor>().get(),
-            accessor<NavigationDispatcher.Accessor>().get(),
-            savedStateHandle
-        )
-    }
+    private val viewModel by hiltNavGraphViewModels<RegistrationViewModel>(R.id.registration_graph)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

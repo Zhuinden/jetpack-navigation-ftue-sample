@@ -16,20 +16,11 @@
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application
 
 import android.content.SharedPreferences
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AuthenticationManager @Inject constructor(val sharedPref: SharedPreferences) {
-    @InstallIn(ApplicationComponent::class)
-    @EntryPoint
-    interface Accessor {
-        fun get(): AuthenticationManager
-    }
-
     fun isAuthenticated(): Boolean =
         sharedPref.getString("username", "")!!.isNotEmpty()
 
@@ -44,6 +35,4 @@ class AuthenticationManager @Inject constructor(val sharedPref: SharedPreference
     fun getAuthenticatedUser(): String {
         return checkNotNull(sharedPref.getString("username", "").takeIf { it!!.isNotEmpty() })
     }
-
-    var authToken: String = "" // why would this be in the viewModel?
 }

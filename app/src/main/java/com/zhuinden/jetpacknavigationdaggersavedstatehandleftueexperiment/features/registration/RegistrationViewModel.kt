@@ -15,7 +15,6 @@
  */
 package com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.features.registration
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -24,13 +23,15 @@ import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.R
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.RegistrationGraphDirections
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.application.AuthenticationManager
 import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.core.navigation.NavigationDispatcher
-import com.zhuinden.jetpacknavigationdaggersavedstatehandleftueexperiment.utils.HiltAssisted
 import com.zhuinden.livedatacombinetuplekt.combineTuple
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class RegistrationViewModel @ViewModelInject constructor(
+@HiltViewModel
+class RegistrationViewModel @Inject constructor(
     private val authenticationManager: AuthenticationManager,
     private val navigationDispatcher: NavigationDispatcher,
-    @HiltAssisted private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     enum class RegistrationState { // this is actually kinda superfluous/unnecessary but ok
         COLLECT_PROFILE_DATA,
