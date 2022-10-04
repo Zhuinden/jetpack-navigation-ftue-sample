@@ -72,7 +72,7 @@ inline fun <reified T : ViewModel> Fragment.fragmentViewModels(
         viewModelStore
     }, factoryProducer = {
         object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(
+            override fun <T : ViewModel> create(
                 modelClass: Class<T>
             ): T = creator.invoke() as T
         }
