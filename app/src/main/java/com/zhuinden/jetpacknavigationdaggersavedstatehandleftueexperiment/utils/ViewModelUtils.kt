@@ -30,9 +30,12 @@ inline fun <reified T : ViewModel> SavedStateRegistryOwner.createAbstractSavedSt
     arguments: Bundle,
     crossinline creator: (SavedStateHandle) -> T
 ): ViewModelProvider.Factory {
-    return object : AbstractSavedStateViewModelFactory(this, arguments) {
+    return object : AbstractSavedStateViewModelFactory(
+        this@createAbstractSavedStateViewModelFactory,
+        arguments
+    ) {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(
+        override fun <T : ViewModel> create(
             key: String, modelClass: Class<T>, handle: SavedStateHandle
         ): T = creator(handle) as T
     }
